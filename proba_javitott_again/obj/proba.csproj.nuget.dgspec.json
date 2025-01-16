@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vivis\\Desktop\\proba_javitott_again\\proba.csproj": {}
+    "C:\\Users\\patri\\Source\\Repos\\Szakdoga-lelt-r\\proba_javitott_again\\proba.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vivis\\Desktop\\proba_javitott_again\\proba.csproj": {
+    "C:\\Users\\patri\\Source\\Repos\\Szakdoga-lelt-r\\proba_javitott_again\\proba.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vivis\\Desktop\\proba_javitott_again\\proba.csproj",
+        "projectUniqueName": "C:\\Users\\patri\\Source\\Repos\\Szakdoga-lelt-r\\proba_javitott_again\\proba.csproj",
         "projectName": "proba",
-        "projectPath": "C:\\Users\\vivis\\Desktop\\proba_javitott_again\\proba.csproj",
-        "packagesPath": "C:\\Users\\vivis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vivis\\Desktop\\proba_javitott_again\\obj\\",
+        "projectPath": "C:\\Users\\patri\\Source\\Repos\\Szakdoga-lelt-r\\proba_javitott_again\\proba.csproj",
+        "packagesPath": "C:\\Users\\patri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\patri\\source\\repos\\Szakdoga-lelt-r\\proba_javitott_again\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\vivis\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\patri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,6 +34,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -64,6 +65,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.35, 6.0.35]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.35, 6.0.35]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.35, 6.0.35]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.35, 6.0.35]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -72,7 +91,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

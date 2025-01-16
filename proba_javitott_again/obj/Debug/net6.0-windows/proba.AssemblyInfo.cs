@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("proba")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f8824ef7dbacd7fc9b9bcee70828334ae93b065")]
 [assembly: System.Reflection.AssemblyProductAttribute("proba")]
 [assembly: System.Reflection.AssemblyTitleAttribute("proba")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

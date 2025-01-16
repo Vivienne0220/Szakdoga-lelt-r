@@ -39,14 +39,14 @@ namespace proba
         private void InitializeComponent()
         {
             this.Text = "Pivo";
-            this.Size = new System.Drawing.Size(600, 400);
+            this.Size = new Size(600, 400);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             datapivo = new DataGridView
             {
-                Size = new System.Drawing.Size(560, 200), 
-                Location = new System.Drawing.Point(10, 20),
+                Size = new Size(560, 200), 
+                Location = new Point(10, 20),
             };
 
             buttonBack = new Button
@@ -68,8 +68,8 @@ namespace proba
 
             textboxKod = new TextBox
             {
-                Size = new System.Drawing.Size(150, 20),
-                Location = new System.Drawing.Point(10, 230),
+                Size = new Size(150, 20),
+                Location = new Point(10, 230),
                 Text = "Produkt kód",
             };
 
@@ -98,14 +98,14 @@ namespace proba
         private void InitializeComponentB()
         {
             this.Text = "Pivo";
-            this.Size = new System.Drawing.Size(600, 400);
+            this.Size = new Size(600, 400);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             datapivoB = new DataGridView
             {
-                Size = new System.Drawing.Size(560, 200),
-                Location = new System.Drawing.Point(10, 20),
+                Size = new Size(560, 200),
+                Location = new Point(10, 20),
             };
 
             buttonBackB = new Button
@@ -118,36 +118,36 @@ namespace proba
 
             textboxnevB = new TextBox
             {
-                Size = new System.Drawing.Size(150, 20),
-                Location = new System.Drawing.Point(10, 230),
+                Size = new Size(150, 20),
+                Location = new Point(10, 230),
                 Text = "Produkt kód",
             };
 
             textboxpredB = new TextBox
             {
-                Size = new System.Drawing.Size(150, 20),
-                Location = new System.Drawing.Point(10, 250),
+                Size = new Size(150, 20),
+                Location = new Point(10, 250),
                 Text = "Zostatok pred",
             };
 
             textboxprijB = new TextBox
             {
-                Size = new System.Drawing.Size(150, 20),
-                Location = new System.Drawing.Point(10, 270),
+                Size = new  Size(150, 20),
+                Location = new Point(10, 270),
                 Text = "Príjem",
             };
 
             textboxuzvB = new TextBox
             {
-                Size = new System.Drawing.Size(150, 20),
-                Location = new System.Drawing.Point(10, 290),
+                Size = new Size(150, 20),
+                Location = new Point(10, 290),
                 Text = "Zostatok uzávierke",
             };
 
             textboxcenaB = new TextBox
             {
-                Size = new System.Drawing.Size(150, 20),
-                Location = new System.Drawing.Point(10, 310),
+                Size = new Size(150, 20),
+                Location = new Point(10, 310),
                 Text = "Cena",
             };
 
