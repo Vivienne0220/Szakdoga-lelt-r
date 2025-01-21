@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BFONyfXlG7A=",
+  "dgSpecHash": "AnUekxaDis8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\patri\\Source\\Repos\\Szakdoga-lelt-r\\proba_javitott_again\\proba.csproj",
+  "projectFilePath": "C:\\Users\\patri\\Documents\\Szakdoga-lelt-r-main\\proba_javitott_again\\proba.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\patri\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\patri\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",

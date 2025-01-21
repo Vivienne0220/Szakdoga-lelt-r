@@ -15,6 +15,8 @@ namespace proba
         private TextBox txtUsername;
         private TextBox txtPassword;
         private Button btnLogin;
+        private Label lblUsername;
+        private Label lblPassword;
         private Label lblError;
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -47,32 +49,64 @@ namespace proba
 
         private void InitializeComponent()
         {
-            this.Text = "Bejelentkezés";
-            this.Size = new Size(300, 200);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            lblUsername = new Label();
+            txtUsername = new TextBox();
+            lblPassword = new Label();
+            txtPassword = new TextBox();
+            lblError = new Label();
+            btnLogin = new Button();
+            SuspendLayout();
 
-            var lblUsername = new Label { Text = "Felhasználónév:", Left = 20, Top = 20, Width = 100 };
-            txtUsername = new TextBox { Left = 130, Top = 20, Width = 120 };
+            // lblUsername
+            lblUsername.Location = new Point(20, 20);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(100, 23);
+            lblUsername.Text = "Felhasználónév:";
 
-            var lblPassword = new Label { Text = "Jelszó:", Left = 20, Top = 60, Width = 100 };
-            txtPassword = new TextBox { Left = 130, Top = 60, Width = 120, PasswordChar = '*' };
+            // txtUsername
+            txtUsername.Location = new Point(140, 20);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(150, 27);
 
-            lblError = new Label { Text = "", Left = 20, Top = 100, Width = 230, ForeColor = System.Drawing.Color.Red };
+            // lblPassword
+            lblPassword.Location = new Point(20, 60);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(100, 23);
+            lblPassword.Text = "Jelszó:";
 
-            btnLogin = new Button { Text = "Bejelentkezés", Left = 80, Top = 130, Width = 100 };
+            // txtPassword
+            txtPassword.Location = new Point(140, 60);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(150, 27);
+            txtPassword.PasswordChar = '*'; // Rejtett jelszó
+
+            // lblError
+            lblError.Location = new Point(20, 100);
+            lblError.Name = "lblError";
+            lblError.Size = new Size(270, 23);
+            lblError.ForeColor = Color.Red;
+
+            // btnLogin
+            btnLogin.Location = new Point((ClientSize.Width - btnLogin.Width) / 2, 140);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(100, 30);
+            btnLogin.Text = "Bejelentkezés";
             btnLogin.Click += BtnLogin_Click;
 
-            this.Controls.Add(lblUsername);
-            this.Controls.Add(txtUsername);
-            this.Controls.Add(lblPassword);
-            this.Controls.Add(txtPassword);
-            this.Controls.Add(lblError);
-            this.Controls.Add(btnLogin);
-        }
-
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
+            // LoginForm
+            ClientSize = new Size(320, 200);
+            Controls.Add(lblUsername);
+            Controls.Add(txtUsername);
+            Controls.Add(lblPassword);
+            Controls.Add(txtPassword);
+            Controls.Add(lblError);
+            Controls.Add(btnLogin);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "LoginForm";
+            Text = "Bejelentkezés";
+            ResumeLayout(false);
+            PerformLayout();
         }
     }
 }

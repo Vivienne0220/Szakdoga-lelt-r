@@ -24,5 +24,13 @@ namespace proba
         [BsonElement("price"), BsonRepresentation(BsonType.Decimal128)]
         public decimal Price { get; set; }
 
+        [BsonElement("zosPred"), BsonRepresentation(BsonType.Decimal128)]
+        public decimal ZosPred { get; set; }
+
+        [BsonElement("prijem"), BsonRepresentation(BsonType.Decimal128)]
+        public decimal Prijem { get; set; }
+
+        [BsonElement("uzavZos"), BsonRepresentation(BsonType.Decimal128)]
+        public decimal UzavZos { get; set; }
     }
 }
