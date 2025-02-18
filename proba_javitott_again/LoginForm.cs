@@ -19,6 +19,22 @@ namespace proba
         private Label lblPassword;
         private Label lblError;
 
+        private void TxtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnLogin_Click(sender, e);
+            }
+        }
+
+        private void TxtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnLogin_Click(sender, e); 
+            }
+        }
+
         private void BtnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
@@ -33,7 +49,7 @@ namespace proba
 
             }
 
-            else if (username == "Dolgozó" && password == "2222")
+            else if (username == "Pracovník" && password == "2222")
             {
                 this.Hide();
                 var selectionForm = new SelectionForm();
@@ -43,7 +59,7 @@ namespace proba
 
             else
             {
-                lblError.Text = "Helytelen felhasználónév vagy jelszó!";
+                lblError.Text = "Nesprávne meno alebo heslo!";
             }
         }
 
@@ -61,24 +77,26 @@ namespace proba
             lblUsername.Location = new Point(20, 20);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(100, 23);
-            lblUsername.Text = "Felhasználónév:";
+            lblUsername.Text = "Meno:";
 
             // txtUsername
             txtUsername.Location = new Point(140, 20);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(150, 27);
+            txtUsername.KeyDown += TxtUsername_KeyDown;
 
             // lblPassword
             lblPassword.Location = new Point(20, 60);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(100, 23);
-            lblPassword.Text = "Jelszó:";
+            lblPassword.Text = "Heslo:";
 
             // txtPassword
             txtPassword.Location = new Point(140, 60);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(150, 27);
             txtPassword.PasswordChar = '*'; // Rejtett jelszó
+            txtPassword.KeyDown += TxtPassword_KeyDown;
 
             // lblError
             lblError.Location = new Point(20, 100);
@@ -90,7 +108,7 @@ namespace proba
             btnLogin.Location = new Point((ClientSize.Width - btnLogin.Width) / 2, 140);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(100, 30);
-            btnLogin.Text = "Bejelentkezés";
+            btnLogin.Text = "Prihlásenie";
             btnLogin.Click += BtnLogin_Click;
 
             // LoginForm
@@ -104,7 +122,7 @@ namespace proba
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "LoginForm";
-            Text = "Bejelentkezés";
+            Text = "Prihlásenie";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -45,7 +45,7 @@ namespace proba
 
         private void InitializeComponent()
         {
-            this.Text = "Cigaretta - Dolgozó";
+            this.Text = "Cigaretta - Pracovník";
             this.Size = new System.Drawing.Size(1000, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -62,7 +62,7 @@ namespace proba
 
             buttonBack = new Button
             {
-                Text = "Vissza",
+                Text = "Späť",
                 Left = 850,
                 Top = 380,
                 Width = 100,
@@ -122,7 +122,7 @@ namespace proba
 
             buttonUpdate = new Button
             {
-                Text = "Update",
+                Text = "Aktualizovať",
                 Left = 850,
                 Top = 260,
                 Width = 100,
@@ -222,7 +222,7 @@ namespace proba
 
             buttonBackB = new Button
             {
-                Text = "Vissza",
+                Text = "Späť",
                 Left = 850,
                 Top = 380,
                 Width = 100,
@@ -308,7 +308,7 @@ namespace proba
 
             buttonNewB = new Button
             {
-                Text = "Hozzáad",
+                Text = "Pridať",
                 Left = 850,
                 Top = 230,
                 Width = 100
@@ -316,7 +316,7 @@ namespace proba
 
             buttonUpdateB = new Button
             {
-                Text = "Update",
+                Text = "Aktualizovať",
                 Left = 850,
                 Top = 260,
                 Width = 100,
@@ -324,7 +324,7 @@ namespace proba
 
             buttonDeleteB = new Button
             {
-                Text = "Törlés",
+                Text = "Vymazať",
                 Left = 850,
                 Top = 290,
                 Width = 100

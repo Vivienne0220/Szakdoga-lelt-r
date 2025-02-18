@@ -20,7 +20,7 @@ namespace proba
 
             buttonBack = new Button
             {
-                Text = "Vissza",
+                Text = "Späť",
                 Left = 450,
                 Top = 330,
                 Width = 100,

@@ -115,7 +115,7 @@
             button8.Name = "button8";
             button8.Size = new Size(75, 23);
             button8.TabIndex = 7;
-            button8.Text = "Vissza";
+            button8.Text = "Späť";
             button8.UseVisualStyleBackColor = true;
             button8.Click += button8_Click;
             // 

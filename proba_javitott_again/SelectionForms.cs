@@ -23,7 +23,7 @@ namespace proba
         private void InitializeComponent()
         {
 
-            this.Text = "Választás";
+            this.Text = "Výber";
             this.Size = new System.Drawing.Size(300, 200);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -50,7 +50,7 @@ namespace proba
 
             buttonBack = new Button
             {
-                Text = "Vissza",
+                Text = "Späť",
                 Left = 180,
                 Top = 130,
                 Width = 100,
