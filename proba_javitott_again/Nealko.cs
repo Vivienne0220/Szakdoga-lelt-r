@@ -8,7 +8,7 @@ namespace proba
 {
     public class Nealko : Form
     {
-        private IMongoCollection<Termekek> nealkoTabla = Program.adatbazis.GetCollection<Termekek>("nealko");
+        private IMongoCollection<Termekek> nealkoTabla = Program.termekAdatbazis.GetCollection<Termekek>("nealko");
 
         private DataGridView dataNealkoB;
 
@@ -57,7 +57,9 @@ namespace proba
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
             buttonBack = new Button

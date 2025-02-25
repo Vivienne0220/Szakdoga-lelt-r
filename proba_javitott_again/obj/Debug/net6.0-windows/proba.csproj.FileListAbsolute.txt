@@ -106,7 +106,6 @@ C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\bin\Debug\net
 C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.csproj.AssemblyReference.cache
 C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.Form1.resources
 C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.MainForm.resources
-C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.SelectionForm.resources
 C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.csproj.GenerateResource.cache
 C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\patri\Documents\Szakdoga-lelt-r-main\proba_javitott_again\obj\Debug\net6.0-windows\proba.AssemblyInfoInputs.cache

@@ -8,7 +8,7 @@ namespace proba
 {
     public class Destilaty : Form
     {
-        private IMongoCollection<Termekek> destilatyTabla = Program.adatbazis.GetCollection<Termekek>("destilaty");
+        private IMongoCollection<Termekek> destilatyTabla = Program.termekAdatbazis.GetCollection<Termekek>("destilaty");
 
         private DataGridView dataDestilatyB;
 
@@ -57,7 +57,9 @@ namespace proba
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
             buttonBack = new Button

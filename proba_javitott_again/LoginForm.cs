@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Windows.Forms;
 
 namespace proba
 {
     public class LoginForm : Form
     {
-
+        private IMongoCollection<Accounts> fiokTabla = Program.fiokAdatbazis.GetCollection<Accounts>("account");
         public LoginForm()
         {
             InitializeComponent();
@@ -37,30 +38,30 @@ namespace proba
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text;
-            string password = txtPassword.Text;
+            string _username = txtUsername.Text;
+            string _password = txtPassword.Text;
 
-            if (username == "Barbi" && password == "1111")
+            if (string.IsNullOrEmpty(_username))
             {
-                this.Hide();
-                var selectionForm = new SelectionForm(true);
-                selectionForm.ShowDialog();
-                this.Close();
-
+                lblError.Text = "Prosím zadajte meno a heslo!";
+                return;
             }
 
-            else if (username == "Pracovník" && password == "2222")
+            var filterDefinition = Builders<Accounts>.Filter.Eq(a => a.Username, _username);
+            var account = fiokTabla.Find(filterDefinition).FirstOrDefault();
+
+            if (account != null && _password == account.Password)
             {
                 this.Hide();
-                var selectionForm = new SelectionForm();
+                var selectionForm = new SelectionForm(account.IsBarbi);
                 selectionForm.ShowDialog();
                 this.Close();
             }
-
             else
             {
                 lblError.Text = "Nesprávne meno alebo heslo!";
             }
+
         }
 
         private void InitializeComponent()
@@ -105,7 +106,7 @@ namespace proba
             lblError.ForeColor = Color.Red;
 
             // btnLogin
-            btnLogin.Location = new Point((ClientSize.Width - btnLogin.Width) / 2, 140);
+            btnLogin.Location = new Point(107, 140);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(100, 30);
             btnLogin.Text = "Prihlásenie";

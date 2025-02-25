@@ -8,7 +8,10 @@ namespace proba
     static class Program
     {
         public static MongoClient client = new MongoClient("mongodb://localhost:27017");
-        public static IMongoDatabase adatbazis = client.GetDatabase("termekek");
+        public static IMongoDatabase termekAdatbazis = client.GetDatabase("termekek");
+
+        public static IMongoDatabase fiokAdatbazis = client.GetDatabase("accounts");
+
         [STAThread]
         static void Main()
         {

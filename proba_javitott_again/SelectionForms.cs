@@ -9,6 +9,7 @@ namespace proba
         private Button buttonDaily;
         private Button buttonMonthly;
         private Button buttonBack;
+        private Button buttonRegister;
         private bool _isBarbi;
 
         public SelectionForm(bool isBarbi = false)
@@ -16,51 +17,66 @@ namespace proba
             _isBarbi = isBarbi;
 
             InitializeComponent();
-            if (isBarbi) { buttonMonthly.Enabled = true; }
-            else { buttonMonthly.Enabled = false; }
+            if (isBarbi) { buttonMonthly.Enabled = true; buttonRegister.Enabled = true; }
+            else { buttonMonthly.Enabled = false; buttonRegister.Enabled = false; }
         }
 
         private void InitializeComponent()
         {
-
-            this.Text = "Výber";
-            this.Size = new System.Drawing.Size(300, 200);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-
-            buttonDaily = new Button
-            {
-                Text = "Denná inventúra",
-                Left = 50,
-                Top = 50,
-                Width = 100
-            };
-
+            buttonDaily = new Button();
+            buttonMonthly = new Button();
+            buttonBack = new Button();
+            buttonRegister = new Button();
+            SuspendLayout();
+            // 
+            // buttonDaily
+            // 
+            buttonDaily.Location = new Point(5, 5);
+            buttonDaily.Name = "buttonDaily";
+            buttonDaily.Size = new Size(150, 25);
+            buttonDaily.TabIndex = 0;
+            buttonDaily.Text = "Denná inventúra";
             buttonDaily.Click += buttonDaily_Click;
-
-            buttonMonthly = new Button
-            {
-                Text = "Mesačná Inventúra",
-                Left = 150,
-                Top = 50,
-                Width = 100
-            };
-
+            // 
+            // buttonMonthly
+            // 
+            buttonMonthly.Location = new Point(5, 30);
+            buttonMonthly.Name = "buttonMonthly";
+            buttonMonthly.Size = new Size(150, 25);
+            buttonMonthly.TabIndex = 1;
+            buttonMonthly.Text = "Mesačná Inventúra";
             buttonMonthly.Click += buttonMonthly_Click;
-
-            buttonBack = new Button
-            {
-                Text = "Späť",
-                Left = 180,
-                Top = 130,
-                Width = 100,
-            };
-
+            // 
+            // buttonBack
+            // 
+            buttonBack.Location = new Point(220, 120);
+            buttonBack.Name = "buttonBack";
+            buttonBack.Size = new Size(75, 25);
+            buttonBack.TabIndex = 2;
+            buttonBack.Text = "Späť";
             buttonBack.Click += buttonBack_Click;
-
-            this.Controls.Add(buttonDaily);
-            this.Controls.Add(buttonMonthly);
-            this.Controls.Add(buttonBack);
+            // 
+            // buttonRegister
+            // 
+            buttonRegister.Location = new Point(5, 55);
+            buttonRegister.Name = "buttonRegister";
+            buttonRegister.Size = new Size(150, 25);
+            buttonRegister.TabIndex = 2;
+            buttonRegister.Text = "Správa účtov";
+            buttonRegister.Click += buttonRegister_Click;
+            // 
+            // SelectionForm
+            // 
+            ClientSize = new Size(300, 150);
+            Controls.Add(buttonDaily);
+            Controls.Add(buttonMonthly);
+            Controls.Add(buttonBack);
+            Controls.Add(buttonRegister);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "SelectionForm";
+            Text = "Výber";
+            ResumeLayout(false);
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
@@ -71,25 +87,32 @@ namespace proba
             this.Close();
         }
 
-        
+
+        private void buttonRegister_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var spravaUcet = new SpravaUcet();
+            spravaUcet.ShowDialog();
+            this.Close();
+        }
+
         private void buttonMonthly_Click(object sender, EventArgs e)
         {
-            if(buttonMonthly.Enabled == true) 
+            if (buttonMonthly.Enabled == true)
             {
                 this.Hide();
                 var mainForm = new MainForm();
                 mainForm.ShowDialog();
                 this.Close();
             }
-            
+
         }
 
-    
         private void buttonDaily_Click(object sender, EventArgs e)
         {
             this.Hide();
             var Form1 = new Form1(_isBarbi);
-            Form1.ShowDialog(); 
+            Form1.ShowDialog();
             this.Close();
         }
     }

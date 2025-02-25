@@ -8,7 +8,7 @@ namespace proba
 {
     public class Pivo : Form
     {
-        private IMongoCollection<Termekek> pivoTabla = Program.adatbazis.GetCollection<Termekek>("pivo");
+        private IMongoCollection<Termekek> pivoTabla = Program.termekAdatbazis.GetCollection<Termekek>("pivo");
 
         private DataGridView dataPivoB;
 
@@ -57,7 +57,9 @@ namespace proba
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
             buttonBack = new Button
