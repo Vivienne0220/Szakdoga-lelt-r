@@ -48,13 +48,13 @@ namespace proba
         private void InitializeComponent()
         {
             this.Text = "Nealko - Pracovník";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 470);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             dataNealkoB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -212,13 +212,13 @@ namespace proba
         private void InitializeComponentB()
         {
             this.Text = "Nealko - Barbi";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 470);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             dataNealkoB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -426,7 +426,7 @@ namespace proba
                 ZosPred = decimal.Parse(textboxpredB.Text),
                 Prijem = decimal.Parse(textboxprijB.Text),
                 UzavZos = decimal.Parse(textboxzosB.Text),
-
+                Kategoria = (KategoriaType)containerComboBox.SelectedItem,
             };
 
             nealkoTabla.InsertOne(newTermek);
@@ -493,15 +493,44 @@ namespace proba
                 row["Pred+Prijem"] = (termek.ZosPred + termek.Prijem).ToString();
                 row["Zostatok uzav."] = termek.UzavZos.ToString();
 
+               
+
                 decimal fixErtek = KategoriaHelper.GetFixErtek(termek.Kategoria);
                 decimal predaj = (termek.ZosPred + termek.Prijem - termek.UzavZos);
-                decimal predajfull = predaj * fixErtek;
+                decimal predajfull = 0;
 
                 row["Predaj"] = predaj.ToString();
-
-                row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
                 row["Kategória"] = termek.Kategoria.ToString();
 
+                // Kategóriánkénti műveletek
+                if (termek.Kategoria == KategoriaType.Sud)
+                {
+                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                }
+
+                else if (termek.Kategoria == KategoriaType.Flasa)
+                {
+                    predajfull = predaj  * fixErtek;
+                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                }
+
+                else if (termek.Kategoria == KategoriaType.Pleh)
+                {
+                    predajfull = predaj * fixErtek;
+                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                }
+
+                else if (termek.Kategoria == KategoriaType.Sklenené)
+                {
+                    predajfull = predaj * fixErtek;
+                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                }
+
+                else
+                {
+                    predajfull = 0;
+                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                }
 
                 dataTable.Rows.Add(row);
             }

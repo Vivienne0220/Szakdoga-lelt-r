@@ -23,8 +23,8 @@ namespace proba
 {
     private static readonly Dictionary<KategoriaType, decimal> KategoriaErtekek = new Dictionary<KategoriaType, decimal>
     {
-        { KategoriaType.Sud, 0.00m },
-        { KategoriaType.Flasa, 0.00m },
+        { KategoriaType.Sud, 10.00m },
+        { KategoriaType.Flasa, 0.15m },
         { KategoriaType.Pleh, 0.15m },
         { KategoriaType.Sklenené, 0.13m },
         { KategoriaType.Nič, 0.00m }
