@@ -36,6 +36,11 @@ namespace proba
 
         private bool _isBarbi;
 
+        public decimal nealko;
+        public decimal full = 0;
+        public decimal nealkofull = 0;
+        public decimal celkomnealko = 0;
+
         public Nealko(bool isBarbi = true)
         {
             _isBarbi = isBarbi;
@@ -48,7 +53,7 @@ namespace proba
         private void InitializeComponent()
         {
             this.Text = "Nealko - Pracovník";
-            this.Size = new System.Drawing.Size(1100, 470);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
@@ -209,10 +214,10 @@ namespace proba
             };
         }
 
-        private void InitializeComponentB()
+        public void InitializeComponentB()
         {
             this.Text = "Nealko - Barbi";
-            this.Size = new System.Drawing.Size(1100, 470);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
@@ -223,7 +228,8 @@ namespace proba
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
             containerComboBox = new ComboBox
@@ -497,43 +503,57 @@ namespace proba
 
                 decimal fixErtek = KategoriaHelper.GetFixErtek(termek.Kategoria);
                 decimal predaj = (termek.ZosPred + termek.Prijem - termek.UzavZos);
-                decimal predajfull = 0;
+                decimal predajzalohou = 0;
 
                 row["Predaj"] = predaj.ToString();
                 row["Kategória"] = termek.Kategoria.ToString();
 
-                // Kategóriánkénti műveletek
-                if (termek.Kategoria == KategoriaType.Sud)
+                if (termek.Kategoria == KategoriaType.Flasa)
                 {
-                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
-                }
-
-                else if (termek.Kategoria == KategoriaType.Flasa)
-                {
-                    predajfull = predaj  * fixErtek;
-                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                    predajzalohou = predaj * fixErtek;
+                    decimal nealko = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = nealko.ToString();
+                    nealkofull = full + nealko;
+                    celkomnealko += nealkofull;
                 }
 
                 else if (termek.Kategoria == KategoriaType.Pleh)
                 {
-                    predajfull = predaj * fixErtek;
-                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                    predajzalohou = predaj * fixErtek;
+                    decimal nealko = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = nealko.ToString();
+                    nealkofull = full + nealko;
+                    celkomnealko += nealkofull;
                 }
 
                 else if (termek.Kategoria == KategoriaType.Sklenené)
                 {
-                    predajfull = predaj * fixErtek;
-                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                    predajzalohou = predaj * fixErtek;
+                    decimal nealko = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = nealko.ToString();
+                    nealkofull = full + nealko;
+                    celkomnealko += nealkofull;
                 }
 
                 else
                 {
-                    predajfull = 0;
-                    row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
+                    predajzalohou = 0;
+                    decimal nealko = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = nealko.ToString();
+                    nealkofull = full + nealko;
+                    celkomnealko += nealkofull;
                 }
 
                 dataTable.Rows.Add(row);
             }
+            Label labelCelkomB = new Label
+            {
+                Text = $"Celkom nealko: {celkomnealko.ToString("N2")}",
+                Location = new System.Drawing.Point(600, 235),
+                Size = new System.Drawing.Size(200, 20),
+            };
+
+            this.Controls.Add(labelCelkomB);
 
             dataNealkoB.DataSource = dataTable;
         }

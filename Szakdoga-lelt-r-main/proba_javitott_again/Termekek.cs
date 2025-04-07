@@ -10,32 +10,39 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace proba
 {
     [Serializable]
+
+    public enum CigarettaType
+    {
+        Mäkké,
+        Tvrdé
+    }
+
     public enum KategoriaType
     {
-        Sud = 1,
-        Flasa = 2,
-        Pleh = 3,
-        Sklenené = 4,
-        Nič = 5
+        Sud,
+        Flasa,
+        Pleh,
+        Sklenené,
+        Nič
     }
 
     public static class KategoriaHelper
-{
-    private static readonly Dictionary<KategoriaType, decimal> KategoriaErtekek = new Dictionary<KategoriaType, decimal>
     {
-        { KategoriaType.Sud, 10.00m },
-        { KategoriaType.Flasa, 0.15m },
-        { KategoriaType.Pleh, 0.15m },
-        { KategoriaType.Sklenené, 0.13m },
-        { KategoriaType.Nič, 0.00m }
-    };
+        private static readonly Dictionary<KategoriaType, decimal> KategoriaErtekek = new Dictionary<KategoriaType, decimal>
+        {
+            { KategoriaType.Sud, 10.00m },
+            { KategoriaType.Flasa, 0.15m },
+            { KategoriaType.Pleh, 0.15m },
+            { KategoriaType.Sklenené, 0.13m },
+            { KategoriaType.Nič, 0.00m }
+        };
 
-    public static decimal GetFixErtek(KategoriaType kategoria)
-    {
-        return KategoriaErtekek.ContainsKey(kategoria) ? KategoriaErtekek[kategoria] : 0.00m;
+        public static decimal GetFixErtek(KategoriaType kategoria)
+        {
+            return KategoriaErtekek.ContainsKey(kategoria) ? KategoriaErtekek[kategoria] : 0.00m;
+        }
     }
-}
-
+    
     public class Termekek
     {
    
@@ -63,5 +70,10 @@ namespace proba
 
         [BsonElement("kategoria"), BsonRepresentation(BsonType.String)]
         public KategoriaType Kategoria { get; set; }
+
+        [BsonElement("kategoriacigi"), BsonRepresentation(BsonType.String)]
+        public CigarettaType KategoriaCigi { get; set; }
+
+
     }
 }

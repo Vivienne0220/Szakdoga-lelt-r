@@ -32,6 +32,9 @@ namespace proba
         private TextBox textboxKodB;
         private TextBox textboxzosB;
 
+        public decimal vino;
+        public decimal celkomvino = 0;
+
         private bool _isBarbi;
 
         public Vino(bool isBarbi = true)
@@ -52,7 +55,7 @@ namespace proba
 
             dataVinoB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -208,13 +211,13 @@ namespace proba
         private void InitializeComponentB()
         {
             this.Text = "Vino - Barbi";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             dataVinoB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -440,7 +443,7 @@ namespace proba
             this.Close();
         }
 
-        private void refreshDataGrid()
+        public void refreshDataGrid()
         {
             var filterDefinition = Builders<Termekek>.Filter.Empty;
             var term = VinoTabla.Find(filterDefinition).ToList();
@@ -456,6 +459,8 @@ namespace proba
             dataTable.Columns.Add("Predaj");
             dataTable.Columns.Add("Celkom");
 
+            
+
             foreach (var termek in term)
             {
                 var row = dataTable.NewRow();
@@ -467,13 +472,31 @@ namespace proba
                 row["Pred+Prijem"] = (termek.ZosPred + termek.Prijem).ToString();
                 row["Zostatok uzav."] = termek.UzavZos.ToString();
                 row["Predaj"] = ((termek.ZosPred + termek.Prijem) - termek.UzavZos).ToString();
-                row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price).ToString();
 
+                decimal vino = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                row["Celkom"] = vino.ToString();
+
+                celkomvino += vino;
+
+  
                 dataTable.Rows.Add(row);
             }
 
+
+
+            Label labelCelkomB = new Label
+            {
+                Text = $"Celkom vino: {celkomvino.ToString("N2")}",
+                Location = new System.Drawing.Point(600, 235),
+                Size = new System.Drawing.Size(200, 20),
+            };
+
+            this.Controls.Add(labelCelkomB);
+
             dataVinoB.DataSource = dataTable;
         }
+
+
 
     }
 }

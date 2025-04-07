@@ -36,6 +36,11 @@ namespace proba
 
         private bool _isBarbi;
 
+        public decimal pivo;
+        public decimal full = 0;
+        public decimal pivofull = 0;
+        public decimal celkompivo = 0;
+
         public Pivo(bool isBarbi = true)
         {
             _isBarbi = isBarbi;
@@ -45,16 +50,16 @@ namespace proba
             else { InitializeComponent(); }
         }
 
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.Text = "Pivo - Pracovník";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             dataPivoB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -210,7 +215,7 @@ namespace proba
         private void InitializeComponentB()
         {
             this.Text = "Pivo - Barbi";
-            this.Size = new System.Drawing.Size(1100, 470);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
@@ -248,6 +253,9 @@ namespace proba
                 Location = new System.Drawing.Point(100, 230),
                 Text = ""
             };
+
+            
+
             Label labelKodB = new Label
             {
                 Text = "Produkt kód:",
@@ -446,7 +454,6 @@ namespace proba
                 .Set(a => a.Prijem, decimal.Parse(textboxprijB.Text))
                 .Set(a => a.UzavZos, decimal.Parse(textboxzosB.Text))
                 .Set(a => a.Kategoria, (KategoriaType)containerComboBox.SelectedItem);
-
             pivoTabla.UpdateOne(filterDefinition, updateDefinition);
             refreshDataGrid();
         }
@@ -498,21 +505,71 @@ namespace proba
                 row["Pred+Prijem"] = (termek.ZosPred + termek.Prijem).ToString();
                 row["Zostatok uzav."] = termek.UzavZos.ToString();
 
+
+
                 decimal fixErtek = KategoriaHelper.GetFixErtek(termek.Kategoria);
                 decimal predaj = (termek.ZosPred + termek.Prijem - termek.UzavZos);
-                decimal predajfull = predaj * fixErtek;
+                decimal predajzalohou = 0;
+                
 
                 row["Predaj"] = predaj.ToString();
-
-                row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajfull).ToString();
                 row["Kategória"] = termek.Kategoria.ToString();
+
+                if (termek.Kategoria == KategoriaType.Flasa)
+                {
+                    predajzalohou = predaj * fixErtek;
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = pivo.ToString();
+                    pivofull = full + pivo;
+                    celkompivo += pivofull;
+
+                }
+
+                else if (termek.Kategoria == KategoriaType.Pleh)
+                {
+
+                    predajzalohou = predaj * fixErtek;
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = pivo.ToString();
+                    pivofull = full + pivo;
+                    celkompivo += pivofull;
+                }
+
+                else if (termek.Kategoria == KategoriaType.Sklenené)
+                {
+                    predajzalohou = predaj * fixErtek;
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = pivo.ToString();
+                    pivofull = full + pivo;
+                    celkompivo += pivofull;
+                }
+
+                else
+                {
+                    predajzalohou = 0;
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
+                    row["Celkom"] = pivo.ToString();
+                    pivofull = full + pivo;
+                    celkompivo += pivofull;
+                }
 
 
                 dataTable.Rows.Add(row);
             }
 
+            Label labelCelkomB = new Label
+            {
+                Text = $"Celkom pivo: {celkompivo.ToString("N2")}",
+                Location = new System.Drawing.Point(600, 235),
+                Size = new System.Drawing.Size(200, 20),
+            };
+ 
+            this.Controls.Add(labelCelkomB);
             dataPivoB.DataSource = dataTable;
+
         }
+
+        
 
     }
 }

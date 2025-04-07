@@ -32,6 +32,11 @@ namespace proba
         private TextBox textboxKodB;
         private TextBox textboxzosB;
 
+        private ComboBox containerComboBox;
+
+        public decimal cigaretta;
+        public decimal celkomcigaretta = 0;
+
         private bool _isBarbi;
 
         public Cigaretta(bool isBarbi = true)
@@ -46,13 +51,13 @@ namespace proba
         private void InitializeComponent()
         {
             this.Text = "Cigaretta - Pracovník";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             datacigiB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -208,19 +213,29 @@ namespace proba
         private void InitializeComponentB()
         {
             this.Text = "Cigaretta - Barbi";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             datacigiB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
+
+            containerComboBox = new ComboBox
+            {
+                Name = "containerComboBox",
+                DropDownStyle = ComboBoxStyle.DropDownList, // Ne lehessen szabad szöveget írni
+                Location = new System.Drawing.Point(100, 380),  // Pozíció a gombok mellett
+                Size = new System.Drawing.Size(150, 20),
+            };
+            containerComboBox.DataSource = Enum.GetValues(typeof(CigarettaType));
 
             buttonBackB = new Button
             {
@@ -308,6 +323,13 @@ namespace proba
                 Size = new System.Drawing.Size(150, 20),
             };
 
+            Label labelkategoria = new Label
+            {
+                Text = "Kategória:",
+                Location = new System.Drawing.Point(10, 385),
+                Size = new System.Drawing.Size(80, 20),
+            };
+
             buttonNewB = new Button
             {
                 Text = "Pridať",
@@ -356,6 +378,8 @@ namespace proba
             this.Controls.Add(labelprijB);
             this.Controls.Add(labelzosB);
             this.Controls.Add(labelcenaB);
+            this.Controls.Add(labelkategoria);
+            this.Controls.Add(containerComboBox);
 
             refreshDataGrid();
         }
@@ -379,6 +403,7 @@ namespace proba
                 textboxpredB.Text = termek.ZosPred.ToString();
                 textboxprijB.Text = termek.Prijem.ToString();
                 textboxzosB.Text = termek.UzavZos.ToString();
+                containerComboBox.SelectedItem = termek.KategoriaCigi;
             }
 
             else
@@ -388,6 +413,7 @@ namespace proba
                 textboxpredB.Text = "";
                 textboxprijB.Text = "";
                 textboxzosB.Text = "";
+                containerComboBox.SelectedIndex = -1;
             }
         }
 
@@ -402,6 +428,7 @@ namespace proba
                 ZosPred = decimal.Parse(textboxpredB.Text),
                 Prijem = decimal.Parse(textboxprijB.Text),
                 UzavZos = decimal.Parse(textboxzosB.Text),
+                KategoriaCigi = (CigarettaType)containerComboBox.SelectedItem,
             };
 
             cigiTabla.InsertOne(newTermek);
@@ -416,7 +443,8 @@ namespace proba
                 .Set(a => a.Price, decimal.Parse(textboxcenaB.Text))
                 .Set(a => a.ZosPred, decimal.Parse(textboxpredB.Text))
                 .Set(a => a.Prijem, decimal.Parse(textboxprijB.Text))
-                .Set(a => a.UzavZos, decimal.Parse(textboxzosB.Text));
+                .Set(a => a.UzavZos, decimal.Parse(textboxzosB.Text))
+                .Set(a => a.KategoriaCigi, (CigarettaType)containerComboBox.SelectedItem);
 
             cigiTabla.UpdateOne(filterDefinition, updateDefinition);
             refreshDataGrid();
@@ -454,6 +482,7 @@ namespace proba
             dataTable.Columns.Add("Zostatok uzav.");
             dataTable.Columns.Add("Predaj");
             dataTable.Columns.Add("Celkom");
+            dataTable.Columns.Add("Kategória");
 
             foreach (var termek in term)
             {
@@ -466,11 +495,26 @@ namespace proba
                 row["Pred+Prijem"] = (termek.ZosPred + termek.Prijem).ToString();
                 row["Zostatok uzav."] = termek.UzavZos.ToString();
                 row["Predaj"] = ((termek.ZosPred + termek.Prijem) - termek.UzavZos).ToString();
-                row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price).ToString();
+
+                decimal cigaretta = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                row["Celkom"] = cigaretta.ToString();
+
+                row["Kategória"] = termek.KategoriaCigi.ToString();
+
+                celkomcigaretta += cigaretta;
 
                 dataTable.Rows.Add(row);
             }
-            
+
+            Label labelCelkomB = new Label
+            {
+                Text = $"Celkom cigaretta: {celkomcigaretta.ToString("N2")}",
+                Location = new System.Drawing.Point(600, 235),
+                Size = new System.Drawing.Size(200, 20),
+            };
+
+            this.Controls.Add(labelCelkomB);
+
             datacigiB.DataSource = dataTable;
         }
 

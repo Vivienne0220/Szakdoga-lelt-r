@@ -32,6 +32,9 @@ namespace proba
         private TextBox textboxKodB;
         private TextBox textboxzosB;
 
+        public decimal napoje;
+        public decimal celkomnapoje = 0;
+
         private bool _isBarbi;
 
         public Napoje(bool isBarbi = true)
@@ -43,16 +46,16 @@ namespace proba
             else { InitializeComponent(); }
         }
 
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.Text = "Teplé Nápoje - Pracovník";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             dataNapojeB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
@@ -208,18 +211,19 @@ namespace proba
         private void InitializeComponentB()
         {
             this.Text = "Teplé Nápoje - Barbi";
-            this.Size = new System.Drawing.Size(1000, 450);
+            this.Size = new System.Drawing.Size(1100, 450);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
             dataNapojeB = new DataGridView
             {
-                Size = new System.Drawing.Size(960, 200),
+                Size = new System.Drawing.Size(1060, 200),
                 Location = new System.Drawing.Point(10, 20),
                 ReadOnly = true,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
             buttonBackB = new Button
@@ -466,10 +470,23 @@ namespace proba
                 row["Pred+Prijem"] = (termek.ZosPred + termek.Prijem).ToString();
                 row["Zostatok uzav."] = termek.UzavZos.ToString();
                 row["Predaj"] = ((termek.ZosPred + termek.Prijem) - termek.UzavZos).ToString();
-                row["Celkom"] = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price).ToString();
+
+                decimal napoje = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                row["Celkom"] = napoje.ToString();
+
+                celkomnapoje += napoje;
 
                 dataTable.Rows.Add(row);
             }
+
+            Label labelCelkomB = new Label
+            {
+                Text = $"Celkom jedlo: {celkomnapoje.ToString("N2")}",
+                Location = new System.Drawing.Point(600, 235),
+                Size = new System.Drawing.Size(200, 20),
+            };
+
+            this.Controls.Add(labelCelkomB);
 
             dataNapojeB.DataSource = dataTable;
         }
