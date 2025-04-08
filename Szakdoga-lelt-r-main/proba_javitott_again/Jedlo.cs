@@ -457,7 +457,7 @@ namespace proba
             dataTable.Columns.Add("Pred+Prijem");
             dataTable.Columns.Add("Zostatok uzav.");
             dataTable.Columns.Add("Predaj");
-            dataTable.Columns.Add("Celkom");
+            dataTable.Columns.Add("Spolu");
 
             foreach (var termek in term)
             {
@@ -472,14 +472,14 @@ namespace proba
                 row["Predaj"] = ((termek.ZosPred + termek.Prijem) - termek.UzavZos).ToString();
 
                 decimal jedlo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
-                row["Celkom"] = jedlo.ToString();
+                row["Spolu"] = jedlo.ToString();
                 celkomjedlo += jedlo;
 
                 dataTable.Rows.Add(row);
             }
             Label labelCelkomB = new Label
             {
-                Text = $"Celkom jedlo: {celkomjedlo.ToString("N2")}",
+                Text = $"Spolu jedlo: {celkomjedlo.ToString("N2")}",
                 Location = new System.Drawing.Point(600, 235),
                 Size = new System.Drawing.Size(200, 20),
             };

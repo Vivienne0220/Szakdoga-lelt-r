@@ -491,7 +491,11 @@ namespace proba
             dataTable.Columns.Add("Pred+Prijem");
             dataTable.Columns.Add("Zostatok uzav.");
             dataTable.Columns.Add("Predaj");
-            dataTable.Columns.Add("Celkom");
+            if (_isBarbi)
+            {
+                dataTable.Columns.Add("Spolu");
+                dataTable.Columns.Add("Záloha");
+            }
             dataTable.Columns.Add("Kategória");
 
             foreach (var termek in term)
@@ -518,8 +522,12 @@ namespace proba
                 if (termek.Kategoria == KategoriaType.Flasa)
                 {
                     predajzalohou = predaj * fixErtek;
-                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
-                    row["Celkom"] = pivo.ToString();
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                    if (_isBarbi)
+                    {
+                        row["Spolu"] = pivo.ToString();
+                        row["Záloha"] = predajzalohou.ToString();
+                    }
                     pivofull = full + pivo;
                     celkompivo += pivofull;
 
@@ -529,8 +537,12 @@ namespace proba
                 {
 
                     predajzalohou = predaj * fixErtek;
-                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
-                    row["Celkom"] = pivo.ToString();
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                    if (_isBarbi)
+                    {
+                        row["Spolu"] = pivo.ToString();
+                        row["Záloha"] = predajzalohou.ToString();
+                    }
                     pivofull = full + pivo;
                     celkompivo += pivofull;
                 }
@@ -538,8 +550,12 @@ namespace proba
                 else if (termek.Kategoria == KategoriaType.Sklenené)
                 {
                     predajzalohou = predaj * fixErtek;
-                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
-                    row["Celkom"] = pivo.ToString();
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                    if (_isBarbi)
+                    {
+                        row["Spolu"] = pivo.ToString();
+                        row["Záloha"] = predajzalohou.ToString();
+                    }
                     pivofull = full + pivo;
                     celkompivo += pivofull;
                 }
@@ -547,8 +563,12 @@ namespace proba
                 else
                 {
                     predajzalohou = 0;
-                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price + predajzalohou);
-                    row["Celkom"] = pivo.ToString();
+                    decimal pivo = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
+                    if (_isBarbi)
+                    {
+                        row["Spolu"] = pivo.ToString();
+                        row["Záloha"] = predajzalohou.ToString();
+                    }
                     pivofull = full + pivo;
                     celkompivo += pivofull;
                 }
@@ -559,7 +579,7 @@ namespace proba
 
             Label labelCelkomB = new Label
             {
-                Text = $"Celkom pivo: {celkompivo.ToString("N2")}",
+                Text = $"Spolu pivo: {celkompivo.ToString("N2")}",
                 Location = new System.Drawing.Point(600, 235),
                 Size = new System.Drawing.Size(200, 20),
             };

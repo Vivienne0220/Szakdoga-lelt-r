@@ -1,5 +1,7 @@
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-
+using MongoDB.Bson;
+using MongoDB.Driver;
+using Newtonsoft.Json;
+using System.Collections;
 
 namespace proba
 {
@@ -103,6 +105,40 @@ namespace proba
             var vino = new Vino(_isBarbi);
             vino.ShowDialog();
             this.Close();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            var tablak = Program.termekAdatbazis.ListCollectionNames().ToList();
+            foreach (var tabla in tablak)
+            {
+                var collection = Program.termekAdatbazis.GetCollection<BsonDocument>(tabla);
+
+                var documents = collection.Find(new BsonDocument()).ToList();
+                var json = JsonConvert.SerializeObject(documents, Formatting.Indented);
+
+                string dateString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+
+                string systemDrive = Environment.GetEnvironmentVariable("SystemDrive");
+
+                string filePath = Path.Combine(systemDrive, "databaseBackups", dateString);
+
+                string backupFilePath = Path.Combine(filePath, $"{tabla}.json");
+
+                string directoryPath = Path.GetDirectoryName(backupFilePath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                if (File.Exists(backupFilePath))
+                {
+                    File.Delete(backupFilePath);
+                }
+
+                File.WriteAllText(backupFilePath, json);
+
+            }
         }
     }
 }

@@ -9,6 +9,10 @@ namespace proba
         private Button buttonBack;
         private bool _isBarbi;
         private TextBox textBoxResults;
+        private Button buttonCalc;
+        private TextBox uver;
+        private TextBox vydaj;
+        private Label trzbaLabel;
 
         public DailyForm(bool isBarbi = true)
         {
@@ -33,6 +37,41 @@ namespace proba
                 ReadOnly = true
             };
 
+            uver = new TextBox
+            {
+                Size = new System.Drawing.Size(150, 20),
+                Location = new System.Drawing.Point(350, 100),
+                Text = ""
+            };
+
+            Label uverLabel = new Label
+            {
+                Text = "Úver:",
+                Location = new System.Drawing.Point(310, 102),
+                Size = new System.Drawing.Size(40, 20),
+            };
+
+            vydaj = new TextBox
+            {
+                Size = new System.Drawing.Size(150, 20),
+                Location = new System.Drawing.Point(350, 130),
+                Text = ""
+            };
+
+            Label vydajLabel = new Label
+            {
+                Text = "Výdaj:",
+                Location = new System.Drawing.Point(310, 132),
+                Size = new System.Drawing.Size(40, 20),
+            };
+
+            trzbaLabel = new Label
+            {
+                Text = "Tržba:",
+                Location = new System.Drawing.Point(365, 200),
+                Size = new System.Drawing.Size(100, 20)
+            };
+
             // Vissza gomb
             buttonBack = new Button
             {
@@ -41,15 +80,37 @@ namespace proba
                 Top = 330,
                 Width = 100,
             };
+
+            buttonCalc = new Button
+            {
+                Text = "Tržba",
+                Left = 360,
+                Top = 165,
+                Width = 100,
+            };
+
             buttonBack.Click += buttonBack_Click;
+            buttonCalc.Click += ButtonCalc_Click;
 
             this.Controls.Add(textBoxResults);
             this.Controls.Add(buttonBack);
+            this.Controls.Add(buttonCalc);
+            this.Controls.Add(uver);
+            this.Controls.Add(uverLabel);
+            this.Controls.Add(vydajLabel);
+            this.Controls.Add(vydaj);
         }
 
-        private void DisplayResults()
+        private void ButtonCalc_Click(object? sender, EventArgs e)
         {
-            // Összegek kiszámítása
+            Console.WriteLine(decimal.Parse(vydaj.Text) + decimal.Parse(vydaj.Text));
+            decimal trzba = GetResults() - (decimal.Parse(uver.Text) + decimal.Parse(vydaj.Text));
+            trzbaLabel.Text = "Tržba: " + trzba.ToString("N2") + "€";
+            this.Controls.Add(trzbaLabel);
+        }
+
+        public decimal GetResults()
+        {
             decimal celkompivo = new Pivo().celkompivo;
             decimal celkomnealko = new Nealko().celkomnealko;
             decimal celkomcigaretta = new Cigaretta().celkomcigaretta;
@@ -61,6 +122,22 @@ namespace proba
 
             decimal celkomvsetko = celkompivo + celkomnealko + celkomcigaretta +
                                  celkomjedlo + celkomnapoje + celkomostatne + celkomdestilaty;
+
+            return celkomvsetko;
+        }
+
+        private void DisplayResults()
+        {
+            decimal celkompivo = new Pivo().celkompivo;
+            decimal celkomnealko = new Nealko().celkomnealko;
+            decimal celkomcigaretta = new Cigaretta().celkomcigaretta;
+            decimal celkomjedlo = new Jedlo().celkomjedlo;
+            decimal celkomnapoje = new Napoje().celkomnapoje;
+            decimal celkomostatne = new Ostatne().celkomostatne;
+            decimal celkomdestilaty = new Destilaty().celkomdestilaty;
+            decimal celkomvino = new Vino().celkomvino;
+
+            decimal celkomvsetko = GetResults();
 
             // Eredmények formázása és megjelenítése
             StringBuilder sb = new StringBuilder();
@@ -75,9 +152,11 @@ namespace proba
             sb.AppendLine($"Destiláty:   {celkomdestilaty.ToString("N2")} €");
             sb.AppendLine($"Vino:        {celkomvino.ToString("N2")} €");
             sb.AppendLine("---------------------");
-            sb.AppendLine($"CELKOM:      {celkomvsetko.ToString("N2")} €");
+            sb.AppendLine($"Spolu:      {celkomvsetko.ToString("N2")} €");
 
             textBoxResults.Text = sb.ToString();
+
+
         }
 
         private void buttonBack_Click(object sender, EventArgs e)

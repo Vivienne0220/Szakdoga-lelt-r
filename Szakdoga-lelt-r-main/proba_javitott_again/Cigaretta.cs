@@ -39,6 +39,8 @@ namespace proba
 
         private bool _isBarbi;
 
+        private List<string> runningOut = new List<string>(); 
+
         public Cigaretta(bool isBarbi = true)
         {
             _isBarbi = isBarbi;
@@ -469,6 +471,7 @@ namespace proba
 
         private void refreshDataGrid()
         {
+
             var filterDefinition = Builders<Termekek>.Filter.Empty;
             var term = cigiTabla.Find(filterDefinition).ToList();
             
@@ -481,7 +484,7 @@ namespace proba
             dataTable.Columns.Add("Pred+Prijem");
             dataTable.Columns.Add("Zostatok uzav.");
             dataTable.Columns.Add("Predaj");
-            dataTable.Columns.Add("Celkom");
+            dataTable.Columns.Add("Spolu");
             dataTable.Columns.Add("Kategória");
 
             foreach (var termek in term)
@@ -497,18 +500,30 @@ namespace proba
                 row["Predaj"] = ((termek.ZosPred + termek.Prijem) - termek.UzavZos).ToString();
 
                 decimal cigaretta = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
-                row["Celkom"] = cigaretta.ToString();
+                row["Spolu"] = cigaretta.ToString();
 
                 row["Kategória"] = termek.KategoriaCigi.ToString();
 
                 celkomcigaretta += cigaretta;
 
                 dataTable.Rows.Add(row);
-            }
 
+                if (termek.UzavZos < (decimal)0.5)
+                {
+                    runningOut.Add(termek.ProductName);
+                }
+            }
+            /*
+            if (runningOut.Count > 0)
+            {
+                string message = "Musís objednať: ";
+                foreach (var termek in runningOut) { message += termek.ToString()+", "; }
+                MessageBox.Show(message);
+            }
+            */
             Label labelCelkomB = new Label
             {
-                Text = $"Celkom cigaretta: {celkomcigaretta.ToString("N2")}",
+                Text = $"Spolu cigaretta: {celkomcigaretta.ToString("N2")}",
                 Location = new System.Drawing.Point(600, 235),
                 Size = new System.Drawing.Size(200, 20),
             };
@@ -516,6 +531,8 @@ namespace proba
             this.Controls.Add(labelCelkomB);
 
             datacigiB.DataSource = dataTable;
+
+            
         }
 
     }
