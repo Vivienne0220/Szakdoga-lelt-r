@@ -649,11 +649,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\patri\\Documents\\Szakdoga-lelt-r-main\\Szakdoga-lelt-r-main\\proba_javitott_again\\proba.csproj",
+      "projectUniqueName": "C:\\Users\\patri\\Downloads\\Szakdoga-lelt-r-main\\proba_javitott_again\\proba.csproj",
       "projectName": "proba",
-      "projectPath": "C:\\Users\\patri\\Documents\\Szakdoga-lelt-r-main\\Szakdoga-lelt-r-main\\proba_javitott_again\\proba.csproj",
+      "projectPath": "C:\\Users\\patri\\Downloads\\Szakdoga-lelt-r-main\\proba_javitott_again\\proba.csproj",
       "packagesPath": "C:\\Users\\patri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\patri\\Documents\\Szakdoga-lelt-r-main\\Szakdoga-lelt-r-main\\proba_javitott_again\\obj\\",
+      "outputPath": "C:\\Users\\patri\\Downloads\\Szakdoga-lelt-r-main\\proba_javitott_again\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\patri\\AppData\\Roaming\\NuGet\\NuGet.Config",

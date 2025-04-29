@@ -1,7 +1,10 @@
+using Microsoft.VisualBasic.ApplicationServices;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using System.Collections;
+using System.Text;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace proba
 {
@@ -109,6 +112,11 @@ namespace proba
 
         private void button11_Click(object sender, EventArgs e)
         {
+
+            string dateString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            string systemDrive = Environment.GetEnvironmentVariable("SystemDrive") ?? "C:";
+            string filePath = Path.Combine(systemDrive, "databaseBackups", dateString);
+
             var tablak = Program.termekAdatbazis.ListCollectionNames().ToList();
             foreach (var tabla in tablak)
             {
@@ -129,10 +137,6 @@ namespace proba
                 }).ToList();
 
                 var json = "[\n" + string.Join(",\n", jsonDocuments) + "\n]";
-
-                string dateString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-                string systemDrive = Environment.GetEnvironmentVariable("SystemDrive") ?? "C:";
-                string filePath = Path.Combine(systemDrive, "databaseBackups", dateString);
                 string backupFilePath = Path.Combine(filePath, $"{tabla}.json");
 
                 string directoryPath = Path.GetDirectoryName(backupFilePath);

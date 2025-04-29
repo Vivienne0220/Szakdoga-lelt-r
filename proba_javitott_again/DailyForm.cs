@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace proba
 {
@@ -107,6 +108,37 @@ namespace proba
             decimal trzba = GetResults() - (decimal.Parse(uver.Text) + decimal.Parse(vydaj.Text));
             trzbaLabel.Text = "Tržba: " + trzba.ToString("N2") + "€";
             this.Controls.Add(trzbaLabel);
+
+            // Eredmények mentése fájlba
+            string dateString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            string systemDrive = Environment.GetEnvironmentVariable("SystemDrive") ?? "C:";
+            string filePath = Path.Combine(systemDrive, "Zmenna", dateString+"_uzavierka.txt");
+
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (directoryPath != null && !Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.WriteLine("Zmenný prehľad");
+                writer.WriteLine();
+                writer.WriteLine($"Pivo:        {new Pivo().celkompivo.ToString("N2")} €");
+                writer.WriteLine($"Nealko:      {new Nealko().celkomnealko.ToString("N2")} €");
+                writer.WriteLine($"Cigarety:    {new Cigaretta().celkomcigaretta.ToString("N2")} €");
+                writer.WriteLine($"Jedlo:       {new Jedlo().celkomjedlo.ToString("N2")} €");
+                writer.WriteLine($"Nápoje:      {new Napoje().celkomnapoje.ToString("N2")} €");
+                writer.WriteLine($"Ostatné:     {new Ostatne().celkomostatne.ToString("N2")} €");
+                writer.WriteLine($"Destiláty:   {new Destilaty().celkomdestilaty.ToString("N2")} €");
+                writer.WriteLine($"Vino:        {new Vino().celkomvino.ToString("N2")} €");
+                writer.WriteLine("---------------------");
+                writer.WriteLine($"Spolu:      {GetResults().ToString("N2")} €");
+                writer.WriteLine("---------------------");
+                writer.WriteLine($"Úver:       {decimal.Parse(uver.Text).ToString("N2")} €");
+                writer.WriteLine($"Výdaj:      {decimal.Parse(vydaj.Text).ToString("N2")} €");
+                writer.WriteLine($"Tržba:      {trzba.ToString("N2")} €");
+            }
         }
 
         public decimal GetResults()
@@ -128,6 +160,7 @@ namespace proba
 
         private void DisplayResults()
         {
+
             decimal celkompivo = new Pivo().celkompivo;
             decimal celkomnealko = new Nealko().celkomnealko;
             decimal celkomcigaretta = new Cigaretta().celkomcigaretta;
@@ -141,7 +174,7 @@ namespace proba
 
             // Eredmények formázása és megjelenítése
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Denný prehľad");
+            sb.AppendLine("Zmenný prehľad");
             sb.AppendLine();
             sb.AppendLine($"Pivo:        {celkompivo.ToString("N2")} €");
             sb.AppendLine($"Nealko:      {celkomnealko.ToString("N2")} €");
@@ -155,7 +188,6 @@ namespace proba
             sb.AppendLine($"Spolu:      {celkomvsetko.ToString("N2")} €");
 
             textBoxResults.Text = sb.ToString();
-
 
         }
 
