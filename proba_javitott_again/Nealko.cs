@@ -71,7 +71,7 @@ namespace proba
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
 
-            
+
 
             buttonBack = new Button
             {
@@ -133,7 +133,7 @@ namespace proba
                 Size = new System.Drawing.Size(150, 20),
             };
 
-            
+
 
             buttonUpdate = new Button
             {
@@ -517,7 +517,7 @@ namespace proba
                 row["Pred+Prijem"] = (termek.ZosPred + termek.Prijem).ToString();
                 row["Zostatok uzav."] = termek.UzavZos.ToString();
 
-               
+
 
                 decimal fixErtek = KategoriaHelper.GetFixErtek(termek.Kategoria);
                 decimal predaj = (termek.ZosPred + termek.Prijem - termek.UzavZos);
@@ -571,5 +571,24 @@ namespace proba
                     decimal nealko = (((termek.ZosPred + termek.Prijem) - termek.UzavZos) * termek.Price);
                     if (_isBarbi)
                     {
-               ÙÕù ¡c×   Çsf<        €                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-   ~ð Â×
+                        row["Spolu"] = nealko.ToString();
+                        row["ZÃ¡loha"] = predajzalohou.ToString();
+                    }
+                    nealkofull = full + nealko;
+                    celkomnealko += nealkofull;
+                }
+
+
+                dataTable.Rows.Add(row);
+            }
+
+            if (_isBarbi)
+            {
+                labelCelkomB.Text = $"Spolu nealko: {celkomnealko.ToString("N2")} â‚¬";
+            }
+
+            dataNealkoB.DataSource = dataTable;
+
+        }
+    }
+}

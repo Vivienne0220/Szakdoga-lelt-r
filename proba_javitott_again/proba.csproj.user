@@ -40,5 +40,8 @@
     <Compile Update="SpravaUcet.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vino.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
