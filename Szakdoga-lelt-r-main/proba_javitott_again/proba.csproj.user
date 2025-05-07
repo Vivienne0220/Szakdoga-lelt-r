@@ -31,6 +31,9 @@
     <Compile Update="Ostatne.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="PieChartDrawer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Pivo.cs">
       <SubType>Form</SubType>
     </Compile>

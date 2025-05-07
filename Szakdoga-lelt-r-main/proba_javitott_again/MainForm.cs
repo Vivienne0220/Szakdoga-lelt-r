@@ -17,7 +17,8 @@ public class MainForm : Form
     private TextBox eredmenyTextBox;
     private TextBox trzbaTextBox;
 
-
+    private Panel chartPanel;
+    
     private void buttonBack_Click(object sender, EventArgs e)
     {
         this.Hide();
@@ -31,7 +32,7 @@ public class MainForm : Form
         _isBarbi = isBarbi;
 
         this.Text = "Týždenná inventúra!";
-        this.Size = new System.Drawing.Size(600, 400);
+        this.Size = new System.Drawing.Size(750, 500);
         FormBorderStyle = FormBorderStyle.FixedSingle;
         MaximizeBox = false;
 
@@ -47,21 +48,25 @@ public class MainForm : Form
         buttonBack = new Button
         {
             Text = "Späť",
-            Left = 450,
-            Top = 330,
+            Left = 600,
+            Top = 430,
             Width = 100,
         };
 
         eredmenyTextBox = new TextBox
         {
             Multiline = true,
-            ScrollBars = ScrollBars.Vertical,
             Location = new System.Drawing.Point(10, 60),
-            Size = new System.Drawing.Size(250, 250),
+            Size = new System.Drawing.Size(250, 380),
             Font = new System.Drawing.Font("Consolas", 10),
             ReadOnly = true
         };
-
+        
+        var diagram = new DiagramRajzolo
+        {
+            Location = new System.Drawing.Point(270, 60)
+        };
+        this.Controls.Add(diagram);
         this.Controls.Add(eredmenyTextBox);
         this.Controls.Add(trzbaTextBox);
 
@@ -120,13 +125,13 @@ public class MainForm : Form
         if (maxTrzba != decimal.MinValue && minTrzba != decimal.MaxValue)
         {
             trzbaTextBox.Text =
-                $"📈 Legnagyobb Tržba: {maxTrzba} € ({maxDate}){Environment.NewLine}" +
-                $"📉 Legkisebb Tržba: {minTrzba} € ({minDate})";
+                $"Najväčší Tržba: {maxTrzba} € ({maxDate}){Environment.NewLine}" +
+                $"Najmenší Tržba: {minTrzba} € ({minDate})";
         }
         else
         {
             trzbaTextBox.Text =
-                "⚠️ Nincs adat a legnagyobb Tržbáról.\n⚠️ Nincs adat a legkisebb Tržbáról.";
+                "⚠️ Neexistujú údaje o najvyššom Tržbe.\n⚠️ Neexistujú údaje o najmenšom Tržbe.";
         }
     }
 
@@ -181,7 +186,7 @@ public class MainForm : Form
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"HIBA: {file}\n{ex.Message}\n");
+                    Console.WriteLine($"CHYBA: {file}\n{ex.Message}\n");
                 }
             }
 

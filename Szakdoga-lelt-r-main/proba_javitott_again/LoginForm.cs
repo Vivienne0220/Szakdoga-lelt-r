@@ -52,11 +52,13 @@ namespace proba
 
             if (account != null && _password == account.Password)
             {
+                MessageBox.Show("Prihlásenie bolo úspešné.", "Informácia", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 var selectionForm = new SelectionForm(account.IsBarbi);
                 selectionForm.ShowDialog();
                 this.Close();
             }
+
             else
             {
                 lblError.Text = "Nesprávne meno alebo heslo!";

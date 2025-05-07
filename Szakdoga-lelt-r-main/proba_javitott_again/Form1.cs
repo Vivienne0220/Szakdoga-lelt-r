@@ -11,7 +11,6 @@ namespace proba
     public partial class Form1 : Form
     {
         private bool _isBarbi;
-
         public Form1(bool isBarbi = false)
         {
             _isBarbi = isBarbi;
@@ -113,68 +112,81 @@ namespace proba
         private void button11_Click(object sender, EventArgs e)
         {
 
-            string dateString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            string systemDrive = Environment.GetEnvironmentVariable("SystemDrive") ?? "C:";
-            string filePath = Path.Combine(systemDrive, "databaseBackups", dateString);
 
-            var tablak = Program.termekAdatbazis.ListCollectionNames().ToList();
-            foreach (var tabla in tablak)
+            DialogResult result = MessageBox.Show("Ste si istí, že ste prepísali všetko v zozname ?", " ", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.OK)
             {
-                var collection = Program.termekAdatbazis.GetCollection<BsonDocument>(tabla);
-                var documents = collection.Find(new BsonDocument()).ToList();
+                string dateString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+                string systemDrive = Environment.GetEnvironmentVariable("SystemDrive") ?? "C:";
+                string filePath = Path.Combine(systemDrive, "databaseBackups", dateString);
 
-                var jsonSettings = new MongoDB.Bson.IO.JsonWriterSettings
+                var tablak = Program.termekAdatbazis.ListCollectionNames().ToList();
+                foreach (var tabla in tablak)
                 {
-                    Indent = true,
-                    OutputMode = MongoDB.Bson.IO.JsonOutputMode.CanonicalExtendedJson
-                };
+                    var collection = Program.termekAdatbazis.GetCollection<BsonDocument>(tabla);
+                    var documents = collection.Find(new BsonDocument()).ToList();
 
-                var jsonDocuments = documents.Select(doc =>
-                {
-                    var backupDoc = doc.DeepClone().AsBsonDocument;
-                    backupDoc.Remove("_id"); 
-                    return backupDoc.ToJson(jsonSettings);
-                }).ToList();
-
-                var json = "[\n" + string.Join(",\n", jsonDocuments) + "\n]";
-                string backupFilePath = Path.Combine(filePath, $"{tabla}.json");
-
-                string directoryPath = Path.GetDirectoryName(backupFilePath);
-                if (directoryPath != null && !Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
-                if (File.Exists(backupFilePath))
-                {
-                    File.Delete(backupFilePath);
-                }
-
-                File.WriteAllText(backupFilePath, json);
-
-                foreach (var item in documents)
-                {
-                    var uzavZosValue = item.GetValue("uzavZos");
-
-                    var filter = Builders<BsonDocument>.Filter.Eq("_id", item.GetValue("_id"));
-                    var updateDef = Builders<BsonDocument>.Update.Set("zosPred", uzavZosValue);
-
-                    foreach (var element in item.Elements.ToList())
+                    var jsonSettings = new MongoDB.Bson.IO.JsonWriterSettings
                     {
-                        string name = element.Name;
+                        Indent = true,
+                        OutputMode = MongoDB.Bson.IO.JsonOutputMode.CanonicalExtendedJson
+                    };
 
-                        if (name != "_id" && name != "price" && name != "zosPred")
+                    var jsonDocuments = documents.Select(doc =>
+                    {
+                        var backupDoc = doc.DeepClone().AsBsonDocument;
+                        backupDoc.Remove("_id");
+                        return backupDoc.ToJson(jsonSettings);
+                    }).ToList();
+
+                    var json = "[\n" + string.Join(",\n", jsonDocuments) + "\n]";
+                    string backupFilePath = Path.Combine(filePath, $"{tabla}.json");
+
+                    string directoryPath = Path.GetDirectoryName(backupFilePath);
+                    if (directoryPath != null && !Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    if (File.Exists(backupFilePath))
+                    {
+                        File.Delete(backupFilePath);
+                    }
+
+                    File.WriteAllText(backupFilePath, json);
+
+                    foreach (var item in documents)
+                    {
+                        var uzavZosValue = item.GetValue("uzavZos");
+
+                        var filter = Builders<BsonDocument>.Filter.Eq("_id", item.GetValue("_id"));
+                        var updateDef = Builders<BsonDocument>.Update.Set("zosPred", uzavZosValue);
+
+                        foreach (var element in item.Elements.ToList())
                         {
-                            if (element.Value.IsNumeric)
+                            string name = element.Name;
+
+                            if (name != "_id" && name != "price" && name != "zosPred")
                             {
-                                updateDef = updateDef.Set(name, 0);
+                                if (element.Value.IsNumeric)
+                                {
+                                    updateDef = updateDef.Set(name, 0);
+                                }
                             }
                         }
+                        collection.UpdateOne(filter, updateDef);
                     }
-                    collection.UpdateOne(filter, updateDef);
                 }
+                MessageBox.Show("Uloženie bolo úspešné.", "Informácia", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            MessageBox.Show("Uloženie bolo úspešné.", "Informácia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                this.Hide();
+                var form1 = new Form1(_isBarbi);
+                form1.ShowDialog();
+                this.Close();
+            }
         }
     }
 }

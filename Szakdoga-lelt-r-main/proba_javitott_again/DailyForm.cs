@@ -138,6 +138,7 @@ namespace proba
                 writer.WriteLine($"Výdaj:      {decimal.Parse(vydaj.Text).ToString("N2")} €");
                 writer.WriteLine($"Tržba:      {trzba.ToString("N2")} €");
             }
+            MessageBox.Show("Uloženie Tržbe bolo úspešné.", "Informácia", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public decimal GetResults()
